@@ -1,0 +1,38 @@
+
+
+ 
+ MainForm 
+ 1000 
+ 
+ 
+ 
+ 
+ 
+ 
+ false 
+ 
+ WIDGET_ALIGN_BOTH 
+ WIDGET_SIZING_DEFAULT 
+ 0 
+ 0 
+ 0 
+ 
+ 
+ WIDGET_ALIGN_BOTH 
+ WIDGET_SIZING_DEFAULT 
+ 0 
+ 0 
+ 0 
+ 
+ 
+ true 
+ true 
+ false 
+ true 
+ 
+ 
+ GuildListBtn 
+ 
+ 
+
+
