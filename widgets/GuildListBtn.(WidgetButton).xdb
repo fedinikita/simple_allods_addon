@@ -3,6 +3,9 @@
 	<Name>GuildListBtn</Name>
 	<Priority>20</Priority>
 	<clipContent>false</clipContent>
+	<Children>
+		<Item href="GuildListBtnText.(WidgetTextView).xdb#xpointer(/WidgetTextView)" />
+	</Children>
 	<Placement>
 		<X>
 			<Align>WIDGET_ALIGN_LOW</Align>
@@ -17,7 +20,6 @@
 			<Size>28</Size>
 		</Y>
 	</Placement>
-	<TransparentInput>true</TransparentInput>
 	<IgnoreDblClick>true</IgnoreDblClick>
 	<Variants>
 		<Item>

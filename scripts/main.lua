@@ -103,14 +103,20 @@ local function DoAddonInit(form)
 	local status = "form=ok"
 	if panel then
 		status = status .. " panel=ok"
-		local txt = panel:GetChildChecked("GuildListBtnText", false)
-		if txt and txt.SetVal and userMods and userMods.ToWString then
-			pcall(function() txt:SetVal("value", userMods.ToWString("MoG")) end)
+		local btn = panel:GetChildChecked("GuildListBtn", false)
+		if btn then
+			status = status .. " btn=ok"
+			local txt = btn:GetChildChecked("GuildListBtnText", false)
+			if txt and txt.SetVal and userMods and userMods.ToWString then
+				pcall(function() txt:SetVal("value", userMods.ToWString("MoG")) end)
+			end
+		else
+			status = status .. " btn=nil"
 		end
-		-- DnD по всей панели: потянул — двигается, кликнул и отпустил — срабатывает кнопка
-		if DnD and DnD.Init then
-			pcall(function() DnD.Init(panel, panel, true) end)
-			panelDndId = DnD.GetWidgetID and DnD.GetWidgetID(panel)
+		-- DnD: двигаем панель, реагируем по кнопке; клик без перетаскивания = действие
+		if DnD and DnD.Init and btn then
+			pcall(function() DnD.Init(panel, btn, true) end)
+			panelDndId = DnD.GetWidgetID and DnD.GetWidgetID(btn)
 			status = status .. (panelDndId and " DnD=ok" or " DnD=ok(id=nil)")
 			common.RegisterEventHandler(OnDndPickAttempt, "EVENT_DND_PICK_ATTEMPT")
 			common.RegisterEventHandler(OnDndDragTo, "EVENT_DND_DRAG_TO")

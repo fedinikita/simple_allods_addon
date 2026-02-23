@@ -5,7 +5,6 @@
 	<clipContent>false</clipContent>
 	<Children>
 		<Item href="GuildListBtn.(WidgetButton).xdb#xpointer(/WidgetButton)" />
-		<Item href="GuildListBtnText.(WidgetTextView).xdb#xpointer(/WidgetTextView)" />
 	</Children>
 	<Placement>
 		<QuantumScale>false</QuantumScale>

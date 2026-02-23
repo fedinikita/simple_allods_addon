@@ -1,1 +1,1 @@
-<html fontname="AllodsSystem"><header color="0xFFFFFFFF" alignx="center" outline="1" fontsize="16"><rs class="class">MoG</rs></header></html>
+<header color="0xFFFFFFFF" alignx="center" outline="1" fontsize="16"><rs class="class"><r name="value"/></rs></header>
