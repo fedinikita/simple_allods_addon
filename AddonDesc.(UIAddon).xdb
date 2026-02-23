@@ -3,9 +3,10 @@
 	<Name>GuildListAddon</Name>
 	<AutoStart>true</AutoStart>
 	<ScriptFileRefs>
+		<Item href="/Mods/SampleCommon/SampleAddonBase.lua"/>
 		<Item href="Scripts/main.lua"/>
 	</ScriptFileRefs>
-	<Form href="Widgets/Main.(WidgetForm).xdb"/>
+	<Form href="Widgets/Main.(WidgetForm).xdb#xpointer(/WidgetForm)"/>
 	<textsGroups>
 		<Item>
 			<groupName>GuildListBtn</groupName>
