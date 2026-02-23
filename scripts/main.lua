@@ -64,56 +64,56 @@ local function LogAddon(msg)
 	LogToChat(msg)
 end
 
+-- Один раз инициализируем (не трижды из скрипта + событий)
+local addonInited = false
+
 -- Общая инициализация: показать окно, DnD, текст кнопки.
--- form — главная форма (mainForm глобал от игры или common.GetAddonMainForm())
 local function DoAddonInit(form)
-	LogToChat("init")
-	LogToChat("hello world")
-	Dbg("DoAddonInit start")
+	if addonInited then return end
 	form = form or mainForm or (common and common.GetAddonMainForm and common.GetAddonMainForm())
-	Dbg("form=" .. (form and ("ok") or "nil"))
-	if not form then return end
-	if form.Show then form:Show(true); Dbg("form:Show(true)") end
-	-- Текст кнопки из Lua (как в LabMap: SetVal на дочерний TextView или на кнопку)
+	if not form then
+		LogToChat("hello world (form=nil)")
+		return
+	end
+	addonInited = true
+	LogToChat("hello world")
+	if form.Show then form:Show(true) end
 	local panel = form:GetChildChecked("GuildListPanel", false) or form:GetChildChecked("MainPanel", false)
+	local status = "form=ok"
 	if panel then
+		status = status .. " panel=ok"
 		local btn = panel:GetChildChecked("GuildListBtn", false)
 		if btn then
+			status = status .. " btn=ok"
 			if btn.SetVal and userMods and userMods.ToWString then
 				pcall(function() btn:SetVal("btn_label", userMods.ToWString("MoG")) end)
-				Dbg("btn:SetVal(btn_label, MoG)")
 			end
 			local txt = btn:GetChildChecked("GuildListBtnText", false)
 			if txt and txt.SetVal and userMods and userMods.ToWString then
 				pcall(function() txt:SetVal("value", userMods.ToWString("MoG")) end)
-				Dbg("btnText:SetVal(value, MoG)")
 			end
 		else
-			Dbg("btn=nil")
+			status = status .. " btn=nil"
 		end
-		-- DnD за верхнюю полоску (DragHandle), чтобы клик по кнопке не перехватывался
 		local handle = panel:GetChildChecked("DragHandle", false)
 		if DnD and DnD.Init then
 			local ok, err = pcall(function() DnD.Init(panel, handle or panel, true) end)
-			Dbg("DnD.Init " .. (ok and "ok" or ("err=" .. tostring(err))))
+			status = status .. (ok and " DnD=ok" or (" DnD=" .. tostring(err)))
 		else
-			Dbg("DnD or DnD.Init nil")
+			status = status .. " DnD=nil"
 		end
 	else
-		Dbg("panel=nil")
+		status = status .. " panel=nil"
 	end
+	LogToChat(status)
 end
 
 local function OnAddonLoadStateChanged(ev)
-	if ev.state ~= ADDON_STATE_LOADED then return end
-	if ev.name ~= ADDON_NAME then return end
-	Dbg("EVENT_ADDON_LOAD_STATE_CHANGED")
+	if ev.state ~= ADDON_STATE_LOADED or ev.name ~= ADDON_NAME then return end
 	DoAddonInit()
 end
 
--- При входе в игру — инициализация снова
 local function OnAvatarCreated(ev)
-	Dbg("EVENT_AVATAR_CREATED")
 	DoAddonInit()
 end
 
@@ -190,10 +190,9 @@ common.RegisterEventHandler(OnAddonLoadStateChanged, "EVENT_ADDON_LOAD_STATE_CHA
 common.RegisterEventHandler(OnAvatarCreated, "EVENT_AVATAR_CREATED")
 common.RegisterReactionHandler(OnGuildListButton, "guildlist")
 
--- Как в LabMap: инициализация сразу в конце скрипта (форма уже создана игрой)
 pcall(function()
 	if common and common.LogInfo then common.LogInfo(ADDON_NAME, "script loaded") end
 	LogToChat("script loaded")
 end)
--- Сразу вызываем Init (mainForm или GetAddonMainForm() к этому моменту уже есть)
+-- Инициализация при первой возможности (форма может быть готова в конце скрипта или по событию)
 DoAddonInit()
