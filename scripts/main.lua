@@ -11,16 +11,16 @@ local function ToStr(wstr)
 	return tostring(wstr)
 end
 
+-- Фильтр как имя аддона — тогда сообщение выводится в чат как у AddonsTools ("AddonsTools: загружено")
+local function LogAddon(msg)
+	common.LogInfo(common.GetAddonSysName(), msg)
+end
+
 local function OnAddonLoadStateChanged(ev)
 	if ev.state ~= ADDON_STATE_LOADED then return end
 	if ev.name ~= common.GetAddonSysName() then return end
-	-- Сообщение при загрузке аддона (видно при включённом user_mods_log_enable=1 в Personal\global.cfg)
-	common.LogInfo("common", "hello world")
-	-- Показать окно аддона
-	local form = common.GetAddonMainForm(common.GetAddonSysName())
-	if form and form.Show then
-		form:Show(true)
-	end
+	LogAddon("загружено")
+	LogAddon("hello world")
 end
 
 -- Возвращает массив никнеймов участников гильдии (string[])
@@ -64,7 +64,7 @@ local function SaveNicknamesToFile(nicknames)
 		f, err = io.open(path, "w")
 	end
 	if not f then
-		common.LogInfo("common", "Не удалось сохранить names.txt: " .. tostring(err))
+		LogAddon("Не удалось сохранить names.txt: " .. tostring(err))
 		return false
 	end
 	for i, name in ipairs(nicknames) do
@@ -77,15 +77,15 @@ end
 local function OnGuildListButton(params)
 	local nicknames = GetGuildMemberNicknames()
 	if #nicknames == 0 then
-		common.LogInfo("common", "Вы не в гильдии или список пуст.")
+		LogAddon("Вы не в гильдии или список пуст.")
 		return
 	end
 	if SaveNicknamesToFile(nicknames) then
-		common.LogInfo("common", "Сохранено " .. #nicknames .. " ников в names.txt")
+		LogAddon("Сохранено " .. #nicknames .. " ников в names.txt")
 	end
-	common.LogInfo("common", "Участники гильдии (" .. #nicknames .. "):")
+	LogAddon("Участники гильдии (" .. #nicknames .. "):")
 	for i, name in ipairs(nicknames) do
-		common.LogInfo("common", "  " .. i .. ". " .. name)
+		LogAddon("  " .. i .. ". " .. name)
 	end
 end
 
