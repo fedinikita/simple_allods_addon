@@ -4,6 +4,12 @@ local ADDON_STATE_LOADED = 3  -- ADDON_STATE_LOADED из EnumAddonState
 
 local ADDON_NAME = common.GetAddonSysName()
 
+-- Отладка: true = писать в чат, false = отключить
+local DEBUG = true
+local function Dbg(msg)
+	if DEBUG then LogToChat("[DBG] " .. tostring(msg)) end
+end
+
 local function ToStr(wstr)
 	if wstr == nil then return "" end
 	if type(wstr) == "string" then return wstr end
@@ -64,19 +70,33 @@ local function OnAddonLoadStateChanged(ev)
 	LogToChat("загружено")
 	LogToChat("hello world")
 	local form = common.GetAddonMainForm()
+	Dbg("form=" .. (form and ("ok name=" .. ((form.GetName and form:GetName()) or "?")) or "nil"))
 	if form and form.Show then
 		form:Show(true)
+		Dbg("form:Show(true) ok")
 	end
-	-- Перетаскивание за всю панель целиком (как в LabMap — за весь header)
+	-- Перетаскивание за всю панель (инициализация с задержкой)
 	local function initDnD()
 		common.UnRegisterEventHandler(initDnD, "EVENT_SECOND_TIMER")
-		if not DnD or not DnD.Init then return end
+		Dbg("initDnD: start")
+		if not DnD then Dbg("initDnD: DnD=nil") return end
+		if not DnD.Init then Dbg("initDnD: DnD.Init=nil") return end
 		local form = common.GetAddonMainForm()
-		if not form then return end
-		local panel = form:GetChildChecked("GuildListPanel", false) or form:GetChildChecked("MainPanel", false)
-		if panel then DnD.Init(panel, panel, true) end
+		if not form then Dbg("initDnD: form=nil") return end
+		local panel = form:GetChildChecked("GuildListPanel", false)
+		if not panel then
+			panel = form:GetChildChecked("MainPanel", false)
+			if panel then Dbg("initDnD: panel=MainPanel") else Dbg("initDnD: panel=nil (GuildListPanel, MainPanel)") end
+		else
+			Dbg("initDnD: panel=GuildListPanel")
+		end
+		if panel then
+			local ok, err = pcall(function() DnD.Init(panel, panel, true) end)
+			if ok then Dbg("initDnD: DnD.Init(panel,panel,true) ok") else Dbg("initDnD: DnD.Init err=" .. tostring(err)) end
+		end
 	end
 	common.RegisterEventHandler(initDnD, "EVENT_SECOND_TIMER")
+	Dbg("EVENT_SECOND_TIMER registered for DnD init")
 end
 
 -- Возвращает массив никнеймов участников гильдии (string[])
@@ -131,6 +151,7 @@ local function SaveNicknamesToFile(nicknames)
 end
 
 local function OnGuildListButton(params)
+	Dbg("кнопка guildlist нажата")
 	local nicknames = GetGuildMemberNicknames()
 	if #nicknames == 0 then
 		LogAddon("Вы не в гильдии или список пуст.")
