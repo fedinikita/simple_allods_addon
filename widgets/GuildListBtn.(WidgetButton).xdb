@@ -1,20 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
 <WidgetButton>
+	<TextTag>btn_label</TextTag>
 	<Variants>
 		<Item>
+			<StateNormal>
+				<FormatFileRef href="ButtonFormat.txt" />
+			</StateNormal>
 			<Reaction>guildlist</Reaction>
 		</Item>
 	</Variants>
 	<Name>GuildListBtn</Name>
 	<Placement>
 		<X>
-			<Align>WIDGET_ALIGN_CENTER</Align>
-			<Size>120</Size>
+			<Align>WIDGET_ALIGN_LOW</Align>
+			<Pos>20</Pos>
+			<Size>240</Size>
 		</X>
 		<Y>
-			<Align>WIDGET_ALIGN_CENTER</Align>
-			<Pos>0</Pos>
-			<Size>32</Size>
+			<Align>WIDGET_ALIGN_LOW</Align>
+			<Pos>25</Pos>
+			<Size>40</Size>
 		</Y>
 	</Placement>
 	<Visible>true</Visible>

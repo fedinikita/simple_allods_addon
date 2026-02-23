@@ -8,18 +8,18 @@
 	<Placement>
 		<QuantumScale>false</QuantumScale>
 		<X>
-			<Align>WIDGET_ALIGN_BOTH</Align>
+			<Align>WIDGET_ALIGN_LOW</Align>
 			<Sizing>WIDGET_SIZING_DEFAULT</Sizing>
 			<Pos>0</Pos>
 			<HighPos>0</HighPos>
-			<Size>0</Size>
+			<Size>280</Size>
 		</X>
 		<Y>
-			<Align>WIDGET_ALIGN_BOTH</Align>
+			<Align>WIDGET_ALIGN_LOW</Align>
 			<Sizing>WIDGET_SIZING_DEFAULT</Sizing>
 			<Pos>0</Pos>
 			<HighPos>0</HighPos>
-			<Size>0</Size>
+			<Size>90</Size>
 		</Y>
 	</Placement>
 	<TransparentInput>false</TransparentInput>

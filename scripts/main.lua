@@ -14,8 +14,13 @@ end
 local function OnAddonLoadStateChanged(ev)
 	if ev.state ~= ADDON_STATE_LOADED then return end
 	if ev.name ~= common.GetAddonSysName() then return end
-	-- Сообщение в чат при входе в игру
+	-- Сообщение при загрузке аддона (видно при включённом user_mods_log_enable=1 в Personal\global.cfg)
 	common.LogInfo("common", "hello world")
+	-- Показать окно аддона
+	local form = common.GetAddonMainForm(common.GetAddonSysName())
+	if form and form.Show then
+		form:Show(true)
+	end
 end
 
 -- Возвращает массив никнеймов участников гильдии (string[])
