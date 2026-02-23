@@ -1,1 +1,1 @@
-<header color="0xFFFFFFFF" alignx="center" outline="1" fontsize="14"><r name="value"/></header>
+<header color="0xFFFFFFFF" alignx="center" fontsize="14">MoG</header>

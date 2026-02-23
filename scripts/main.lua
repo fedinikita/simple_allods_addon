@@ -169,20 +169,18 @@ local function SaveNicknamesToFile(nicknames)
 end
 
 local function OnGuildListButton(params)
-	-- Сразу в чат без условий — чтобы убедиться, что реакция вообще приходит
-	LogToChat("Кнопка нажата!")
-	Dbg("кнопка guildlist нажата")
+	LogToChat("Button clicked!")
 	local nicknames = GetGuildMemberNicknames()
 	if #nicknames == 0 then
-		LogToChat("Вы не в гильдии или список пуст.")
+		LogToChat("Not in guild or list empty.")
 		return
 	end
 	if SaveNicknamesToFile(nicknames) then
-		LogAddon("Сохранено " .. #nicknames .. " ников в names.txt")
+		LogToChat("Saved " .. #nicknames .. " names to names.txt")
 	end
-	LogAddon("Участники гильдии (" .. #nicknames .. "):")
+	LogToChat("Guild members (" .. #nicknames .. "):")
 	for i, name in ipairs(nicknames) do
-		LogAddon("  " .. i .. ". " .. name)
+		LogToChat("  " .. i .. ". " .. name)
 	end
 end
 
