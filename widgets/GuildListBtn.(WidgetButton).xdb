@@ -1,27 +1,37 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <WidgetButton>
-	<TextTag>btn_label</TextTag>
-	<Variants>
-		<Item>
-			<StateNormal>
-				<FormatFileRef href="ButtonFormat.txt" />
-			</StateNormal>
-			<Reaction>guildlist</Reaction>
-		</Item>
-	</Variants>
 	<Name>GuildListBtn</Name>
+	<Priority>20</Priority>
+	<clipContent>false</clipContent>
+	<Children>
+		<Item href="GuildListBtnText.(WidgetTextView).xdb#xpointer(/WidgetTextView)" />
+	</Children>
 	<Placement>
 		<X>
 			<Align>WIDGET_ALIGN_LOW</Align>
 			<Pos>20</Pos>
+			<HighPos>0</HighPos>
 			<Size>240</Size>
 		</X>
 		<Y>
-			<Align>WIDGET_ALIGN_LOW</Align>
+			<Align>WIDGET_ALIGN_BOTH</Align>
 			<Pos>25</Pos>
+			<HighPos>5</HighPos>
 			<Size>40</Size>
 		</Y>
 	</Placement>
-	<Visible>true</Visible>
-	<Enabled>true</Enabled>
+	<IgnoreDblClick>true</IgnoreDblClick>
+	<Variants>
+		<Item>
+			<PushedOffset x="-2" y="2" />
+			<StateNormal>
+				<LayerMain href="../Textures/GUI/MsgBoxButton.(WidgetLayerTiledTexture).xdb#xpointer(/WidgetLayerTiledTexture)" />
+			</StateNormal>
+			<StatePushed>
+				<LayerMain href="../Textures/GUI/MsgBoxButtonPressed.(WidgetLayerTiledTexture).xdb#xpointer(/WidgetLayerTiledTexture)" />
+			</StatePushed>
+			<ReactionOnUp>true</ReactionOnUp>
+			<Reaction>guildlist</Reaction>
+		</Item>
+	</Variants>
 </WidgetButton>

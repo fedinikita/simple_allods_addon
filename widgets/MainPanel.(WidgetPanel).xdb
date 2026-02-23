@@ -1,30 +1,30 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<WidgetForm>
-	<Name>GuildListAddon</Name>
-	<Priority>1000</Priority>
-	<Children>
-		<Item href="MainPanel.(WidgetPanel).xdb#xpointer(/WidgetPanel)" />
-	</Children>
+<WidgetPanel>
+	<Name>GuildListPanel</Name>
+	<Priority>1</Priority>
 	<clipContent>false</clipContent>
+	<Children>
+		<Item href="GuildListBtn.(WidgetButton).xdb#xpointer(/WidgetButton)" />
+	</Children>
 	<Placement>
 		<QuantumScale>false</QuantumScale>
 		<X>
-			<Align>WIDGET_ALIGN_BOTH</Align>
+			<Align>WIDGET_ALIGN_LOW</Align>
 			<Sizing>WIDGET_SIZING_DEFAULT</Sizing>
 			<Pos>0</Pos>
 			<HighPos>0</HighPos>
-			<Size>0</Size>
+			<Size>280</Size>
 		</X>
 		<Y>
-			<Align>WIDGET_ALIGN_BOTH</Align>
+			<Align>WIDGET_ALIGN_LOW</Align>
 			<Sizing>WIDGET_SIZING_DEFAULT</Sizing>
 			<Pos>0</Pos>
 			<HighPos>0</HighPos>
-			<Size>0</Size>
+			<Size>90</Size>
 		</Y>
 	</Placement>
 	<Visible>true</Visible>
 	<Enabled>true</Enabled>
 	<TransparentInput>false</TransparentInput>
-	<PickChildrenOnly>true</PickChildrenOnly>
-</WidgetForm>
+	<PickChildrenOnly>false</PickChildrenOnly>
+</WidgetPanel>
