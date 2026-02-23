@@ -4,8 +4,8 @@
 	<Priority>1</Priority>
 	<clipContent>false</clipContent>
 	<Children>
-		<Item href="DragHandle.(WidgetPanel).xdb#xpointer(/WidgetPanel)" />
 		<Item href="GuildListBtn.(WidgetButton).xdb#xpointer(/WidgetButton)" />
+		<Item href="GuildListBtnText.(WidgetTextView).xdb#xpointer(/WidgetTextView)" />
 	</Children>
 	<Placement>
 		<QuantumScale>false</QuantumScale>

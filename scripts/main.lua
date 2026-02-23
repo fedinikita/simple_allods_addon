@@ -67,6 +67,27 @@ end
 -- Один раз инициализируем (не трижды из скрипта + событий)
 local addonInited = false
 
+-- DnD: клик без перетаскивания = действие кнопки (список гильдии)
+local panelDndId = nil
+local panelDndPendingClick = false
+
+local function OnDndPickAttempt(params)
+	if panelDndId and params.srcId == panelDndId then
+		panelDndPendingClick = true
+	end
+end
+local function OnDndDragTo()
+	if panelDndId and DnD and DnD.Dragging == panelDndId then
+		panelDndPendingClick = false
+	end
+end
+local function OnDndEnd()
+	if panelDndPendingClick then
+		panelDndPendingClick = false
+		OnGuildListButton()
+	end
+end
+
 -- Общая инициализация: показать окно, DnD, текст кнопки.
 local function DoAddonInit(form)
 	if addonInited then return end
@@ -82,23 +103,19 @@ local function DoAddonInit(form)
 	local status = "form=ok"
 	if panel then
 		status = status .. " panel=ok"
-		local btn = panel:GetChildChecked("GuildListBtn", false)
-		if btn then
-			status = status .. " btn=ok"
-			if btn.SetVal and userMods and userMods.ToWString then
-				pcall(function() btn:SetVal("btn_label", userMods.ToWString("MoG")) end)
-			end
-			local txt = btn:GetChildChecked("GuildListBtnText", false)
-			if txt and txt.SetVal and userMods and userMods.ToWString then
-				pcall(function() txt:SetVal("value", userMods.ToWString("MoG")) end)
-			end
-		else
-			status = status .. " btn=nil"
+		local txt = panel:GetChildChecked("GuildListBtnText", false)
+		if txt and txt.SetVal and userMods and userMods.ToWString then
+			pcall(function() txt:SetVal("value", userMods.ToWString("MoG")) end)
 		end
-		local handle = panel:GetChildChecked("DragHandle", false)
+		-- DnD по всей панели: потянул — двигается, кликнул и отпустил — срабатывает кнопка
 		if DnD and DnD.Init then
-			local ok, err = pcall(function() DnD.Init(panel, handle or panel, true) end)
-			status = status .. (ok and " DnD=ok" or (" DnD=" .. tostring(err)))
+			pcall(function() DnD.Init(panel, panel, true) end)
+			panelDndId = DnD.GetWidgetID and DnD.GetWidgetID(panel)
+			status = status .. (panelDndId and " DnD=ok" or " DnD=ok(id=nil)")
+			common.RegisterEventHandler(OnDndPickAttempt, "EVENT_DND_PICK_ATTEMPT")
+			common.RegisterEventHandler(OnDndDragTo, "EVENT_DND_DRAG_TO")
+			common.RegisterEventHandler(OnDndEnd, "EVENT_DND_DROP_ATTEMPT")
+			common.RegisterEventHandler(OnDndEnd, "EVENT_DND_DRAG_CANCELLED")
 		else
 			status = status .. " DnD=nil"
 		end
@@ -158,7 +175,7 @@ local function SaveNicknamesToFile(nicknames)
 		f, err = io.open(path, "w")
 	end
 	if not f then
-		LogAddon("Не удалось сохранить names.txt: " .. tostring(err))
+		LogToChat("Failed to save names.txt: " .. tostring(err))
 		return false
 	end
 	for i, name in ipairs(nicknames) do

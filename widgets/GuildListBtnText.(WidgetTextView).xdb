@@ -1,20 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <WidgetTextView>
 	<Name>GuildListBtnText</Name>
-	<Priority>100</Priority>
+	<Priority>50</Priority>
 	<Placement>
 		<QuantumScale>false</QuantumScale>
 		<X>
 			<Align>WIDGET_ALIGN_LOW</Align>
 			<Sizing>WIDGET_SIZING_DEFAULT</Sizing>
-			<Pos>0</Pos>
+			<Pos>10</Pos>
 			<HighPos>0</HighPos>
 			<Size>140</Size>
 		</X>
 		<Y>
-			<Align>WIDGET_ALIGN_BOTH</Align>
+			<Align>WIDGET_ALIGN_LOW</Align>
 			<Sizing>WIDGET_SIZING_DEFAULT</Sizing>
-			<Pos>0</Pos>
+			<Pos>10</Pos>
 			<HighPos>0</HighPos>
 			<Size>28</Size>
 		</Y>
