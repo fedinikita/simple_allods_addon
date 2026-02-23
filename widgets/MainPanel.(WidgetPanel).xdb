@@ -13,14 +13,14 @@
 			<Sizing>WIDGET_SIZING_DEFAULT</Sizing>
 			<Pos>0</Pos>
 			<HighPos>0</HighPos>
-			<Size>280</Size>
+			<Size>160</Size>
 		</X>
 		<Y>
 			<Align>WIDGET_ALIGN_LOW</Align>
 			<Sizing>WIDGET_SIZING_DEFAULT</Sizing>
 			<Pos>0</Pos>
 			<HighPos>0</HighPos>
-			<Size>90</Size>
+			<Size>50</Size>
 		</Y>
 	</Placement>
 	<Visible>true</Visible>

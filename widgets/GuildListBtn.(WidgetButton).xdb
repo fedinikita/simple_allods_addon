@@ -9,15 +9,15 @@
 	<Placement>
 		<X>
 			<Align>WIDGET_ALIGN_LOW</Align>
-			<Pos>20</Pos>
+			<Pos>10</Pos>
 			<HighPos>0</HighPos>
-			<Size>240</Size>
+			<Size>140</Size>
 		</X>
 		<Y>
-			<Align>WIDGET_ALIGN_BOTH</Align>
-			<Pos>25</Pos>
-			<HighPos>5</HighPos>
-			<Size>40</Size>
+			<Align>WIDGET_ALIGN_LOW</Align>
+			<Pos>10</Pos>
+			<HighPos>0</HighPos>
+			<Size>28</Size>
 		</Y>
 	</Placement>
 	<IgnoreDblClick>true</IgnoreDblClick>

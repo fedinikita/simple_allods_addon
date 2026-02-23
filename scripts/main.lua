@@ -65,7 +65,14 @@ local function OnAddonLoadStateChanged(ev)
 	LogToChat("hello world")
 	-- Показать окно аддона с кнопкой (как у других аддонов при AutoStart)
 	local form = common.GetAddonMainForm()
-	if form and form.Show then form:Show(true) end
+	if form and form.Show then
+		form:Show(true)
+		-- Перетаскивание окна: за зону панели (как в LabMap)
+		if DnD and DnD.Init then
+			local panel = form:GetChildChecked("GuildListPanel", false)
+			if panel then DnD.Init(panel, panel, true) end
+		end
+	end
 end
 
 -- Возвращает массив никнеймов участников гильдии (string[])
