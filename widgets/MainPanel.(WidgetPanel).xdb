@@ -4,7 +4,6 @@
 	<Priority>1</Priority>
 	<clipContent>false</clipContent>
 	<Children>
-		<Item href="DragHandle.(WidgetPanel).xdb#xpointer(/WidgetPanel)" />
 		<Item href="GuildListBtn.(WidgetButton).xdb#xpointer(/WidgetButton)" />
 	</Children>
 	<Placement>

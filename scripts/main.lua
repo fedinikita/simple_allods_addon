@@ -67,16 +67,14 @@ local function OnAddonLoadStateChanged(ev)
 	if form and form.Show then
 		form:Show(true)
 	end
-	-- Перетаскивание: за верхнюю полоску (DragHandle) двигается вся панель
+	-- Перетаскивание за всю панель целиком (как в LabMap — за весь header)
 	local function initDnD()
 		common.UnRegisterEventHandler(initDnD, "EVENT_SECOND_TIMER")
 		if not DnD or not DnD.Init then return end
 		local form = common.GetAddonMainForm()
 		if not form then return end
 		local panel = form:GetChildChecked("GuildListPanel", false) or form:GetChildChecked("MainPanel", false)
-		if not panel then return end
-		local handle = panel:GetChildChecked("DragHandle", false)
-		DnD.Init(panel, handle or panel, true)
+		if panel then DnD.Init(panel, panel, true) end
 	end
 	common.RegisterEventHandler(initDnD, "EVENT_SECOND_TIMER")
 end
