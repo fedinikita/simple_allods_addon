@@ -1,27 +1,22 @@
-
-
- 
- 
- 
- GuildListBtn 
- 
- 
- 
- WIDGET_ALIGN_CENTER 
- 120 
- 
- 
- WIDGET_ALIGN_CENTER 
- 32 
- 32 
- 
- 
- 
- 
- 
- 
- guildlist 
- 
- 
- 
- 
+<?xml version="1.0" encoding="utf-8"?>
+<WidgetButton>
+	<Variants>
+		<Item>
+			<Reaction>guildlist</Reaction>
+		</Item>
+	</Variants>
+	<Name>GuildListBtn</Name>
+	<Placement>
+		<X>
+			<Align>WIDGET_ALIGN_CENTER</Align>
+			<Size>120</Size>
+		</X>
+		<Y>
+			<Align>WIDGET_ALIGN_CENTER</Align>
+			<Pos>0</Pos>
+			<Size>32</Size>
+		</Y>
+	</Placement>
+	<Visible>true</Visible>
+	<Enabled>true</Enabled>
+</WidgetButton>

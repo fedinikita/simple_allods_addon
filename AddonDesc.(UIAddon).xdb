@@ -1,21 +1,11 @@
-
-
- 
- true 
- GuildListAddon 
- 
- 
- 
- Main 
- 
- 
- Main 
- 
- 
- 
- 
- 
- 
- 
- 
-
+<?xml version="1.0" encoding="utf-8"?>
+<UIAddon>
+	<Name>GuildListAddon</Name>
+	<AutoStart>true</AutoStart>
+	<ScriptFileRefs>
+		<Item href="Scripts/main.lua"/>
+	</ScriptFileRefs>
+	<Form href="Widgets/Main.(WidgetForm).xdb"/>
+	<localizedNameFileRef href="name.txt"/>
+	<localizedDescFileRef href="desc.txt"/>
+</UIAddon>
