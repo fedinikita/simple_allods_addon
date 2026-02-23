@@ -64,12 +64,13 @@ local function LogAddon(msg)
 	LogToChat(msg)
 end
 
--- Общая инициализация: показать окно, DnD, текст кнопки. Вызывать при загрузке аддона и при входе в мир.
-local function DoAddonInit()
+-- Общая инициализация: показать окно, DnD, текст кнопки.
+-- form — главная форма (mainForm глобал от игры или common.GetAddonMainForm())
+local function DoAddonInit(form)
 	LogToChat("init")
 	LogToChat("hello world")
 	Dbg("DoAddonInit start")
-	local form = common.GetAddonMainForm()
+	form = form or mainForm or (common and common.GetAddonMainForm and common.GetAddonMainForm())
 	Dbg("form=" .. (form and ("ok") or "nil"))
 	if not form then return end
 	if form.Show then form:Show(true); Dbg("form:Show(true)") end
@@ -90,9 +91,10 @@ local function DoAddonInit()
 		else
 			Dbg("btn=nil")
 		end
-		-- DnD сразу (форма уже есть)
+		-- DnD за верхнюю полоску (DragHandle), чтобы клик по кнопке не перехватывался
+		local handle = panel:GetChildChecked("DragHandle", false)
 		if DnD and DnD.Init then
-			local ok, err = pcall(function() DnD.Init(panel, panel, true) end)
+			local ok, err = pcall(function() DnD.Init(panel, handle or panel, true) end)
 			Dbg("DnD.Init " .. (ok and "ok" or ("err=" .. tostring(err))))
 		else
 			Dbg("DnD or DnD.Init nil")
@@ -109,7 +111,7 @@ local function OnAddonLoadStateChanged(ev)
 	DoAddonInit()
 end
 
--- При входе в игру (как в LabMap) — инициализация снова, чтобы окно и DnD работали
+-- При входе в игру — инициализация снова
 local function OnAvatarCreated(ev)
 	Dbg("EVENT_AVATAR_CREATED")
 	DoAddonInit()
@@ -167,10 +169,12 @@ local function SaveNicknamesToFile(nicknames)
 end
 
 local function OnGuildListButton(params)
+	-- Сразу в чат без условий — чтобы убедиться, что реакция вообще приходит
+	LogToChat("Кнопка нажата!")
 	Dbg("кнопка guildlist нажата")
 	local nicknames = GetGuildMemberNicknames()
 	if #nicknames == 0 then
-		LogAddon("Вы не в гильдии или список пуст.")
+		LogToChat("Вы не в гильдии или список пуст.")
 		return
 	end
 	if SaveNicknamesToFile(nicknames) then
@@ -186,8 +190,10 @@ common.RegisterEventHandler(OnAddonLoadStateChanged, "EVENT_ADDON_LOAD_STATE_CHA
 common.RegisterEventHandler(OnAvatarCreated, "EVENT_AVATAR_CREATED")
 common.RegisterReactionHandler(OnGuildListButton, "guildlist")
 
--- Сразу при загрузке скрипта — чтобы видеть, что скрипт выполнился (логируем в чат при первой возможности)
+-- Как в LabMap: инициализация сразу в конце скрипта (форма уже создана игрой)
 pcall(function()
 	if common and common.LogInfo then common.LogInfo(ADDON_NAME, "script loaded") end
 	LogToChat("script loaded")
 end)
+-- Сразу вызываем Init (mainForm или GetAddonMainForm() к этому моменту уже есть)
+DoAddonInit()
