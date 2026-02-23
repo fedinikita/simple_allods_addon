@@ -64,39 +64,55 @@ local function LogAddon(msg)
 	LogToChat(msg)
 end
 
+-- Общая инициализация: показать окно, DnD, текст кнопки. Вызывать при загрузке аддона и при входе в мир.
+local function DoAddonInit()
+	LogToChat("init")
+	LogToChat("hello world")
+	Dbg("DoAddonInit start")
+	local form = common.GetAddonMainForm()
+	Dbg("form=" .. (form and ("ok") or "nil"))
+	if not form then return end
+	if form.Show then form:Show(true); Dbg("form:Show(true)") end
+	-- Текст кнопки из Lua (как в LabMap: SetVal на дочерний TextView или на кнопку)
+	local panel = form:GetChildChecked("GuildListPanel", false) or form:GetChildChecked("MainPanel", false)
+	if panel then
+		local btn = panel:GetChildChecked("GuildListBtn", false)
+		if btn then
+			if btn.SetVal and userMods and userMods.ToWString then
+				pcall(function() btn:SetVal("btn_label", userMods.ToWString("MoG")) end)
+				Dbg("btn:SetVal(btn_label, MoG)")
+			end
+			local txt = btn:GetChildChecked("GuildListBtnText", false)
+			if txt and txt.SetVal and userMods and userMods.ToWString then
+				pcall(function() txt:SetVal("value", userMods.ToWString("MoG")) end)
+				Dbg("btnText:SetVal(value, MoG)")
+			end
+		else
+			Dbg("btn=nil")
+		end
+		-- DnD сразу (форма уже есть)
+		if DnD and DnD.Init then
+			local ok, err = pcall(function() DnD.Init(panel, panel, true) end)
+			Dbg("DnD.Init " .. (ok and "ok" or ("err=" .. tostring(err))))
+		else
+			Dbg("DnD or DnD.Init nil")
+		end
+	else
+		Dbg("panel=nil")
+	end
+end
+
 local function OnAddonLoadStateChanged(ev)
 	if ev.state ~= ADDON_STATE_LOADED then return end
 	if ev.name ~= ADDON_NAME then return end
-	LogToChat("загружено")
-	LogToChat("hello world")
-	local form = common.GetAddonMainForm()
-	Dbg("form=" .. (form and ("ok name=" .. ((form.GetName and form:GetName()) or "?")) or "nil"))
-	if form and form.Show then
-		form:Show(true)
-		Dbg("form:Show(true) ok")
-	end
-	-- Перетаскивание за всю панель (инициализация с задержкой)
-	local function initDnD()
-		common.UnRegisterEventHandler(initDnD, "EVENT_SECOND_TIMER")
-		Dbg("initDnD: start")
-		if not DnD then Dbg("initDnD: DnD=nil") return end
-		if not DnD.Init then Dbg("initDnD: DnD.Init=nil") return end
-		local form = common.GetAddonMainForm()
-		if not form then Dbg("initDnD: form=nil") return end
-		local panel = form:GetChildChecked("GuildListPanel", false)
-		if not panel then
-			panel = form:GetChildChecked("MainPanel", false)
-			if panel then Dbg("initDnD: panel=MainPanel") else Dbg("initDnD: panel=nil (GuildListPanel, MainPanel)") end
-		else
-			Dbg("initDnD: panel=GuildListPanel")
-		end
-		if panel then
-			local ok, err = pcall(function() DnD.Init(panel, panel, true) end)
-			if ok then Dbg("initDnD: DnD.Init(panel,panel,true) ok") else Dbg("initDnD: DnD.Init err=" .. tostring(err)) end
-		end
-	end
-	common.RegisterEventHandler(initDnD, "EVENT_SECOND_TIMER")
-	Dbg("EVENT_SECOND_TIMER registered for DnD init")
+	Dbg("EVENT_ADDON_LOAD_STATE_CHANGED")
+	DoAddonInit()
+end
+
+-- При входе в игру (как в LabMap) — инициализация снова, чтобы окно и DnD работали
+local function OnAvatarCreated(ev)
+	Dbg("EVENT_AVATAR_CREATED")
+	DoAddonInit()
 end
 
 -- Возвращает массив никнеймов участников гильдии (string[])
@@ -167,4 +183,11 @@ local function OnGuildListButton(params)
 end
 
 common.RegisterEventHandler(OnAddonLoadStateChanged, "EVENT_ADDON_LOAD_STATE_CHANGED")
+common.RegisterEventHandler(OnAvatarCreated, "EVENT_AVATAR_CREATED")
 common.RegisterReactionHandler(OnGuildListButton, "guildlist")
+
+-- Сразу при загрузке скрипта — чтобы видеть, что скрипт выполнился (логируем в чат при первой возможности)
+pcall(function()
+	if common and common.LogInfo then common.LogInfo(ADDON_NAME, "script loaded") end
+	LogToChat("script loaded")
+end)
