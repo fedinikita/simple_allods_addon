@@ -1,1 +1,1 @@
-<button><r name="btn_label"/></button>
+<button color="0xFFFFFFFF" alignx="center" fontsize="14"><r name="btn_label"/></button>

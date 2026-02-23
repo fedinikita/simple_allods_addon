@@ -1,27 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <WidgetPanel>
-	<Name>GuildListPanel</Name>
-	<Priority>1</Priority>
+	<Name>DragHandle</Name>
+	<Priority>10</Priority>
 	<clipContent>false</clipContent>
-	<Children>
-		<Item href="DragHandle.(WidgetPanel).xdb#xpointer(/WidgetPanel)" />
-		<Item href="GuildListBtn.(WidgetButton).xdb#xpointer(/WidgetButton)" />
-	</Children>
 	<Placement>
 		<QuantumScale>false</QuantumScale>
 		<X>
-			<Align>WIDGET_ALIGN_LOW</Align>
+			<Align>WIDGET_ALIGN_BOTH</Align>
 			<Sizing>WIDGET_SIZING_DEFAULT</Sizing>
 			<Pos>0</Pos>
 			<HighPos>0</HighPos>
-			<Size>160</Size>
+			<Size>0</Size>
 		</X>
 		<Y>
 			<Align>WIDGET_ALIGN_LOW</Align>
 			<Sizing>WIDGET_SIZING_DEFAULT</Sizing>
 			<Pos>0</Pos>
 			<HighPos>0</HighPos>
-			<Size>50</Size>
+			<Size>14</Size>
 		</Y>
 	</Placement>
 	<Visible>true</Visible>

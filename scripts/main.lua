@@ -63,16 +63,22 @@ local function OnAddonLoadStateChanged(ev)
 	if ev.name ~= ADDON_NAME then return end
 	LogToChat("загружено")
 	LogToChat("hello world")
-	-- Показать окно аддона с кнопкой (как у других аддонов при AutoStart)
 	local form = common.GetAddonMainForm()
 	if form and form.Show then
 		form:Show(true)
-		-- Перетаскивание окна: за зону панели (как в LabMap)
-		if DnD and DnD.Init then
-			local panel = form:GetChildChecked("GuildListPanel", false)
-			if panel then DnD.Init(panel, panel, true) end
-		end
 	end
+	-- Перетаскивание: за верхнюю полоску (DragHandle) двигается вся панель
+	local function initDnD()
+		common.UnRegisterEventHandler(initDnD, "EVENT_SECOND_TIMER")
+		if not DnD or not DnD.Init then return end
+		local form = common.GetAddonMainForm()
+		if not form then return end
+		local panel = form:GetChildChecked("GuildListPanel", false) or form:GetChildChecked("MainPanel", false)
+		if not panel then return end
+		local handle = panel:GetChildChecked("DragHandle", false)
+		DnD.Init(panel, handle or panel, true)
+	end
+	common.RegisterEventHandler(initDnD, "EVENT_SECOND_TIMER")
 end
 
 -- Возвращает массив никнеймов участников гильдии (string[])

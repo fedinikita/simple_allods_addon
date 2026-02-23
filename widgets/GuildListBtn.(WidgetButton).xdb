@@ -2,10 +2,8 @@
 <WidgetButton>
 	<Name>GuildListBtn</Name>
 	<Priority>20</Priority>
+	<TextTag>btn_label</TextTag>
 	<clipContent>false</clipContent>
-	<Children>
-		<Item href="GuildListBtnText.(WidgetTextView).xdb#xpointer(/WidgetTextView)" />
-	</Children>
 	<Placement>
 		<X>
 			<Align>WIDGET_ALIGN_LOW</Align>
@@ -26,6 +24,7 @@
 			<PushedOffset x="-2" y="2" />
 			<StateNormal>
 				<LayerMain href="../Textures/GUI/MsgBoxButton.(WidgetLayerTiledTexture).xdb#xpointer(/WidgetLayerTiledTexture)" />
+				<FormatFileRef href="ButtonFormat.txt" />
 			</StateNormal>
 			<StatePushed>
 				<LayerMain href="../Textures/GUI/MsgBoxButtonPressed.(WidgetLayerTiledTexture).xdb#xpointer(/WidgetLayerTiledTexture)" />
@@ -34,4 +33,7 @@
 			<Reaction>guildlist</Reaction>
 		</Item>
 	</Variants>
+	<TextStyle>
+		<Align>ALIGNY_MIDDLE</Align>
+	</TextStyle>
 </WidgetButton>
