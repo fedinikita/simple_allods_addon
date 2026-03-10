@@ -3,17 +3,8 @@
 	<Name>GuildListAddon</Name>
 	<AutoStart>true</AutoStart>
 	<ScriptFileRefs>
-		<Item href="/Mods/SampleCommon/SampleAddonBase.lua"/>
-		<Item href="Scripts/LibDnD.lua"/>
 		<Item href="Scripts/main.lua"/>
 	</ScriptFileRefs>
-	<Form href="Widgets/Main.(WidgetForm).xdb#xpointer(/WidgetForm)"/>
-	<textsGroups>
-		<Item>
-			<groupName>GuildListBtn</groupName>
-			<texts href="Widgets/GuildListTexts.(UIRelatedTexts).xdb"/>
-		</Item>
-	</textsGroups>
 	<localizedNameFileRef href="name.txt"/>
 	<localizedDescFileRef href="desc.txt"/>
 </UIAddon>
