@@ -101,7 +101,7 @@ local function OnGuildAppeared()
 
 	-- Сохраняем в конфиг
 	SetConfig("GuildPlayers", namesString)
-	LogToChat("Saved  players to data/Mods/Configs/GuildListAddon/user.cfg", "LogColorGreen")
+	LogToChat("Saved players to data/Mods/Configs/GuildListAddon/user.cfg", "LogColorGreen")
 end
 
 -- Основная функция инициализации
